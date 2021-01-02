@@ -10,10 +10,10 @@
 
 ---
 
-**메서드 정리**
+### 1. 메서드 정리
 <details><summary>메서드 추출 (extraxt method)</summary>
 <p>
-
+플
 > 어떤 코드를 그룹으로 묶어도 되겠다고 판단될 때 해당 코드를 메서드로 빼내자.
 
 메서드 목적에 부합하는 네이밍을 하자.   
@@ -34,7 +34,7 @@ boolean moreThanFiveLateDeliveries() {
 }
 ```
 
-위 메서드처럼 지나치게 단순한 메서드는 없애야 한다. why?  
+#### why?
 메서드명(moreThanFiveLateDeliveries) 을 읽는 것 보다 코드가 더 직관적이고 이해하기 쉽다.
 
 </p>
@@ -44,7 +44,7 @@ boolean moreThanFiveLateDeliveries() {
 <p>
 
 > 지역변수 때문에 Extraxt Method 를 적용할 수 없는 긴 메서드의 경우   
-> 1. 긴 메서드 자체를 객체로 전환해서 모든 지역변수를 객체의 필드로 만들자.  
+> 1. 긴 메서드 자체를 객체로 전환해서 모든 지역변수를 객체의 필드로 만들자.    
 > 2. 긴 메서드를 객체 안의 여러 메서드로 쪼개자. (extract method)
 
 근데 이거... 쓰는게 맞는건지는 잘 모르겠다. 공감이 안됨.
@@ -55,7 +55,7 @@ boolean moreThanFiveLateDeliveries() {
 <details><summary>임시변수 내용 직접 삽입 (inline temp)</summary>
 <p>
 
-> 간단한 수식을 대입받는 임시변수로 인해 다른 리팩토링 기법 적용이 힘들 경우
+> 간단한 수식을 대입받는 임시변수로 인해 다른 리팩토링 기법 적용이 힘들 경우  
 > 그 임시변수를 참조하는 부분을 전부 수식으로 바꾸자.
 
 ```java
@@ -67,8 +67,8 @@ return basePrice > 1000;
 return anOrder.basePrice() > 1000
 ```
 
-흠.. 공감이 잘 안되네.
-basePrice를 네이밍을 잘 지으면 읽기 쉬운데 도움이 되지 않을까 싶은데..  
+흠.. 공감이 잘 안되네.  
+basePrice 임시변수를 네이밍을 잘 지어서 사용하면 읽기 쉬운 경우도 있지 않을까 싶은데..
 
 이 기법은 바로 아래기법(replace temp with query)의 동기라고 한다.  
 순수히 inline temp만 하려면 하지 않아도 되지만,  
@@ -79,11 +79,11 @@ extract method 등의 다른 리팩토링에 방해가 된다면 inline temp 를
 <details><summary>임시변수 -> 메서드 호출로 전환 (replace temp with query)</summary>
 <p>
 
-> 수식의 결과를 저장하는 임시변수가 있을 경우
-> 1. 그 수식을 메서드로 추출하고
+> 수식의 결과를 저장하는 임시변수가 있을 경우  
+> 1. 그 수식을 메서드로 추출하고  
 > 2. 임시변수 사용처를 추출한 메서드로 전부 교체
 
-why?  
+#### why?
 임시변수는 일시적이고 국소적이다.  
 메서드 호출로 전환하면 클래스 안 모든 메서드가 이용할 수 있다. -> 코드가 깔끔해진다.
 
@@ -121,10 +121,10 @@ private double discountFactor() {
 <details><summary>직관적인 임시변수 사용 (introduce explaining variable)</summary>
 <p>
 
-> 사용된 수식이 복잡한 경우
+> 사용된 수식이 복잡한 경우  
 > 수식의 결과/일부분 을 용도에 부합하는 직관적 이름의 임시변수 만들자.
 
-why?  
+#### why?
 수식이 너무 복잡해서 이해하기 힘들다.
 
 ```java
@@ -166,10 +166,10 @@ private double basePrice() {
 <details><summary>임시변수 분리 (split temporary variable)</summary>
 <p>
 
-> 임시변수에 여러 번 값이 대입되는 경우 (루프 변수나 값 누적용 임시변수는 예외)
+> 임시변수에 여러 번 값이 대입되는 경우 (루프 변수나 값 누적용 임시변수는 예외)  
 > 각 대입마다 다른 임시변수를 사용하자.
 
-why?  
+#### why?
 값이 두번 이상 대입되면 여러 용도로 사용된다는 의미이다. 이는 혼동을 줄 수 있는 코드이므로 분리해야 한다.
 
 ```java
@@ -214,10 +214,10 @@ double getDistanceTravelled(int time) {
 <details><summary>매개변수로의 값 대입 제거 (remove assignments to parameters)</summary>
 <p>
 
-> 매개변수로 값을 대입하는 코드가 있는 경우
+> 매개변수로 값을 대입하는 코드가 있는 경우  
 > 매개변수 대신 임시변수를 사용하자.
 
-why?  
+#### why?
 매개변수를 변경하는 경우 혼동이 더 발생할 수 있다.
 
 ```java
@@ -243,7 +243,7 @@ int discount (final int inputVal, final int quantity, final int yearToDate) {
 <details><summary>알고리즘 전환 (substitute algorithm)</summary>
 <p>
     
-> 알고리즘을 더 분명한 것으로 교체해야 하는 경우
+> 알고리즘을 더 분명한 것으로 교체해야 하는 경우  
 > 해당 메서드의 내용을 새 알고리즘으로 바꾸자.
 
 </p>
@@ -251,7 +251,7 @@ int discount (final int inputVal, final int quantity, final int yearToDate) {
 
 &nbsp;
 
-**객체 간의 기능 이동**
+### 2. 객체 간의 기능 이동
 - 메서드 이동 (move method)
 - 필드 이동 (move field)
 - 클래스 추출 (extract class)
@@ -265,10 +265,10 @@ int discount (final int inputVal, final int quantity, final int yearToDate) {
 
 (TODO)
 
-**데이터 체계화**
+### 3. 데이터 체계화
 
-**조건문 간결화**
+### 4. 조건문 간결화
 
-**메서드 호출 단순화**
+### 5. 메서드 호출 단순화
 
-**일반화 처리**
+### 6. 일반화 처리
