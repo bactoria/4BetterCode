@@ -13,7 +13,7 @@
 ### 1. 메서드 정리
 <details><summary>메서드 추출 (extraxt method)</summary>
 <p>
-플
+
 > 어떤 코드를 그룹으로 묶어도 되겠다고 판단될 때 해당 코드를 메서드로 빼내자.
 
 메서드 목적에 부합하는 네이밍을 하자.   
@@ -28,14 +28,14 @@
 
 > 메서드 기능이 너무 단순하여 뻔할 경우 메서드를 호출하는 곳에 넣어버리자.
 
+#### why?
+메서드명(moreThanFiveLateDeliveries) 을 읽는 것 보다 코드가 더 직관적이고 이해하기 쉽다.
+
 ```java
 boolean moreThanFiveLateDeliveries() {
     return _numberOfLateDeliveries > 5;
 }
 ```
-
-#### why?
-메서드명(moreThanFiveLateDeliveries) 을 읽는 것 보다 코드가 더 직관적이고 이해하기 쉽다.
 
 </p>
 </details>
@@ -57,6 +57,10 @@ boolean moreThanFiveLateDeliveries() {
 
 > 간단한 수식을 대입받는 임시변수로 인해 다른 리팩토링 기법 적용이 힘들 경우  
 > 그 임시변수를 참조하는 부분을 전부 수식으로 바꾸자.
+
+#### why?
+임시변수가 다른 리팩토링(eg. extract method)에 방해가 되어 리팩토링이 힘든 상황에는  
+임시변수를 inline하여 다른 리팩토링을 진행하는 것이 더 이득.
 
 ```java
 // bad
